@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
 	private Vector3 moveDirection = Vector3.zero;
 	private PositionQueue posQ = PositionQueue.Instance;
 
+	private float errDelta = 1.0F;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -39,6 +41,15 @@ public class Character : MonoBehaviour
 			moveDirection.y -= gravity * Time.deltaTime;
 
 			controller.Move(moveDirection * Time.deltaTime);
+
+			/*if (Mathf.Abs(position.x - transform.position.x) > errDelta
+				|| Mathf.Abs(position.y - transform.position.y) > errDelta
+				|| Mathf.Abs(position.z - transform.position.z) > errDelta)
+			{
+				moveDirection = transform.TransformPoint (position.x, position.y, position.z);
+				moveDirection.y -= gravity * Time.deltaTime;
+				controller.Move (moveDirection * Time.deltaTime);
+			}*/
 
 			lastPosition = new PlayerPosition(id, transform.position.x, transform.position.y, transform.position.z);
 		}
